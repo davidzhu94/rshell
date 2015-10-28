@@ -11,13 +11,70 @@ using namespace std;
 using namespace boost;
 
 void parseinator(vector<string> input, string& command, string& argument, int& position);
-void commandifier(string command, string argument);
+void commandifier(string command, string argument,Connector & connect);
+
+class Connector
+{
+    public:
+    Connector();
+    ~Connector();
+    bool run;
+    virtual void runNext(bool succeed)= 0;
+};
+
+Connector::Connector()
+{
+    run = false;
+}
+
+Connector::~Connector()
+{
+}
+
+class And: public Connector
+{
+    void runNext(bool succeed);
+};
+
+void And::runNext(bool succeed)
+{
+    if(succeed)
+        run = true;
+    else
+        run = false;
+}
+
+class Or: public Connector
+{
+    void runNext(bool succeed);
+};
+
+void Or::runNext(bool succeed)
+{
+    if(succeed)
+        run = false;
+    else
+        run = true;
+}
+
+class Do: public Connector
+{
+    void runNext(bool succeed);
+};
+
+void Do::runNext(bool succeed)
+{
+    run = true;
+}
+
+
 
 int main()
 {
     string str;
     string command;
     string argument;
+    Connector connect;
     int position = 0;
     getline(cin, str);
     vector<string> instruction;
@@ -31,13 +88,13 @@ int main()
     for(; position < instruction.size();)
     {
         parseinator(instruction, command, argument, position);
-        commandifier(command, argument);
+        commandifier(command, argument,);
         command = "";
         argument = "";
     }
 }
 
-void parseinator(vector<string> input, string& command, string& argument, int& position)
+void parseinator(vector<string> input, string& command, string& argument, int& position, Connector connect)
 {
     command = input[position];
     position++;
@@ -45,6 +102,7 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
     {
         if(input[position] == ";")
         {
+            connector =
             position++;
             break;
         }
@@ -63,7 +121,7 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
     }
 }
 
-void commandifier(string command, string argument)
+void commandifier(string command, string argument, Connector& connect)
 {
     const char * const_command = command.c_str();
     char char_command[command.size()];
@@ -87,7 +145,11 @@ void commandifier(string command, string argument)
     {
 
         printf("Child: executing ls\n");                                                                                             
-        execvp( args[0], args);                                                                                                      
+        execvp( args[0], args);
+        if(execvp( args[0], args) == -1)
+        {
+            connect.runNext(false);
+        }                                                                                                      
         perror("execve failed");
 
     }
@@ -104,17 +166,4 @@ void commandifier(string command, string argument)
     }
    // return 0;
 }
-
-class connector
-{
-    connector();
-    ~connector();
-    bool successful;
-}; 
-
-connector::connector()
-{
-    successful = false;
-}
-
 
