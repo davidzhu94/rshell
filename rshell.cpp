@@ -43,7 +43,7 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
     position++;
     for(; position < input.size(); position++)
     {
-        if(input[position] == "-;")
+        if(input[position] == ";")
         {
             position++;
             break;
@@ -104,4 +104,17 @@ void commandifier(string command, string argument)
     }
    // return 0;
 }
- 
+
+class connector
+{
+    connector();
+    ~connector();
+    bool successful;
+}; 
+
+connector::connector()
+{
+    successful = false;
+}
+
+
