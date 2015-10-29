@@ -73,34 +73,69 @@ int main()
         typedef tokenizer<boost::char_separator<char> > Tok;
         char_separator<char> sep; // default constructed
         Tok tok(str, sep);
-        for(Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter)
+            for(Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter)
             instruction.push_back(*tok_iter);
        // for(int i = 0; i < instruction.size(); i++)
         //    cout << instruction[i] << endl;
-        parseinator(instruction, command, argument, position, connect);
-        commandifier(command, argument, connect);
-        command = "";
-        argument = "";
-        for(; position < instruction.size();)
-        {
+        if(instruction[0] != "#")
+        {    
             parseinator(instruction, command, argument, position, connect);
-            if(connect.runNext())
-                commandifier(command, argument, connect);
+            commandifier(command, argument, connect);
             command = "";
             argument = "";
+            for(; position < instruction.size();)
+            {
+                parseinator(instruction, command, argument, position, connect);
+                if(connect.runNext())
+                    commandifier(command, argument, connect);
+                command = "";
+                argument = "";
+            }
+            position = 0;
         }
-        position = 0;
     }
     return 0;
 }
 
 void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect)
 {
-    command = input[position];
-    position++;
+   // if(input[position] == "#")
+   // {
+   //     connect.type = 1;
+   //     connect.run = false;
+   // }
+    if(input[position] == "&")
+    {
+        connect.type = 1;
+        position += 2;
+    }
+    if(input[position] == "|")
+    {
+        connect.type = 2;
+        position += 2;
+    }
+    if(input[position] == ";")
+    {
+        connect.type = 0;
+        position ++;
+    }
+    if(input[position] != "#")
+    {
+        command = input[position];
+        position++;
+    }
     for(; position < input.size(); position++)
     {
-
+        if(input[position] == "#")
+        {
+              cout << "I AM IN HERE" << endl;
+            position = input.size();
+            connect.type = 1;
+            connect.run = false;
+            break;
+        }
+        if(input[position] == "&" || input[position] == "|" || input[position] == ";")
+            break;
         if(input[position] == "-")
         {
             while(input[position] != ";" && input[position] != "|" && input[position] != "&" && position+1 < input.size())
@@ -108,37 +143,17 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
                 argument += input[position];
                 position++;
             }
-            if(position+1 == input.size())
+            if(position+1 == input.size() || input[position] == ";" || input[position] == "|" || input[position] == "&");
             {
-                argument += input[position];
+               // argument += input[position];
                 position++;
                 break;
             }
-        }
-        if(input[position] == ";")
-        {
-            position++;
-            break;
-        }
-        if(input[position] == "&")
-        {
-            connect.type = 1;
-            position += 2;
-            break;
-        }
-        if(input[position] == "|")
-        {
-            connect.type = 2;
-            position += 2;
-            break;
-        }
-        if(input[position] == "#")
-        {
-            position = input.size();
             break;
         }
         argument += input[position];
-        argument += " ";
+        if(position+1 != input.size() && command == "echo")
+            argument += " ";
     }
 }
 
