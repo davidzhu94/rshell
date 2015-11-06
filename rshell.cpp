@@ -63,7 +63,7 @@ int main()
     int position = 0;
     while(true)
     {
-        cout<<getlogin();
+        cout<<getlogin(); // returns string containing name of user logged in
         gethostname(hostname,sizeof hostname);
         cout<<"@"<<hostname<<"$ ";
         getline(cin, str);
