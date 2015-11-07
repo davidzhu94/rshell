@@ -139,20 +139,6 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
 	{
             break;
 	}
-        if (input[position] == "-")
-        {
-            while (input[position] != ";" && input[position] != "|" && input[position] != "&" && position+1 < input.size())
-            {
-                argument += input[position];
-                position++;
-            }
-            if (position+1 == input.size() || input[position] == ";" || input[position] == "|" || input[position] == "&");
-            {
-                position++;
-                break;
-            }
-            break;
-        }
         argument += input[position];
         if (position+1 != input.size() && command == "echo")
   	{
