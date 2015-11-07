@@ -85,7 +85,7 @@ int main()
             command = "";
             argument = "";
             for (; position < instruction.size();) // run until the end of the instruction
-            {
+            {`
                 parseinator(instruction, command, argument, position, connect);
                 if (connect.runNext()) // checks connector to see if the next command should be ran
 		{
