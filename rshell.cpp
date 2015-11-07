@@ -196,8 +196,6 @@ void commandifier(string command, string argument, Connector& connect)
     }
     else if (c_pid == 0) // in child process 
     {
-
-        cout << "Child: executing ls" << endl;
  	if (no_arg) // no argument
 	{                                                                                             
         	execvp( args[0], args); // execvp the char pointer array that holds the command only
@@ -226,7 +224,6 @@ void commandifier(string command, string argument, Connector& connect)
             perror("wait");
             exit(1);
         }
-        cout << "Parent: finished" << endl;   
     }
     if (!failed)
     {
