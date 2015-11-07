@@ -73,25 +73,29 @@ int main()
         typedef tokenizer<boost::char_separator<char> > Tok;
         char_separator<char> sep; // default constructed
         Tok tok(str, sep);
-        for (Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter)
+        for (Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter) // parses the input into a command and argument
         {
 	    instruction.push_back(*tok_iter);
 	}
-       // for(int i = 0; i < instruction.size(); i++)
-        //    cout << instruction[i] << endl;
+     
         if (instruction[0] != "#") // checks for user input except for comments (#)
         {    
-            parseinator(instruction, command, argument, position, connect); 
-            commandifier(command, argument, connect);
+            parseinator(instruction, command, argument, position, connect); // parses the input into a command and argument  
+            commandifier(command, argument, connect); // runs a command with a given argument 
             command = "";
             argument = "";
-            for (; position < instruction.size();)
+            for (; position < instruction.size();) // run until the end of the instruction
             {
                 parseinator(instruction, command, argument, position, connect);
-                if (connect.runNext())
+                if (connect.runNext()) // checks connector to see if the next command should be ran
 		{
                     commandifier(command, argument, connect);
                 }
+		else
+		{
+		    connect.run = false;
+		    command = "";
+		}
 		command = "";
                 argument = "";
             }
@@ -102,11 +106,6 @@ int main()
 }
 void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect)
 {
-   // if(input[position] == "#")
-   // {
-   //     connect.type = 1;
-   //     connect.run = false;
-   // }
     if (input[position] == "&") // check if string is equal to & connector 
     {
         connect.type = 1; // set & connector to 1 
@@ -131,7 +130,6 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
     {
         if (input[position] == "#")
         {
-            cout << "I AM IN HERE" << endl;
             position = input.size();
             connect.type = 1;
             connect.run = false;
@@ -150,7 +148,6 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
             }
             if (position+1 == input.size() || input[position] == ";" || input[position] == "|" || input[position] == "&");
             {
-               // argument += input[position];
                 position++;
                 break;
             }
@@ -165,7 +162,6 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
 }
 void commandifier(string command, string argument, Connector& connect)
 {
-    cout << "i be command >>" << command << "<< i be argument >>" << argument << "<<" << endl;
     const char * const_command = command.c_str(); 
     char char_command[command.size()];
     const char * const_argument = argument.c_str();
@@ -176,7 +172,6 @@ void commandifier(string command, string argument, Connector& connect)
     char * args1[3]; // char pointer array that holds command, argument, and NULL
     bool no_arg = true;
     bool failed = false;
-    cout << argument.size();
 
     if (argument.size() == 0) // no arguments 
     {
