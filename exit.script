@@ -1,10 +1,10 @@
-Script started on Fri 06 Nov 2015 09:26:49 PM PST
-[jflor053@hammer rshell]$ g++srshell.cpp -o rshell
-[jflor053@hammer rshell]$ ./rshellll.cpp -o rshell
-jflor053@hammer.cs.ucr.edu$ echoohello
+Script started on Fri 06 Nov 2015 11:07:16 PM PST
+[jflor053@hammer rshell]$ g++trshell.cpp -o rshell
+[jflor053@hammer rshell]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo hello
 hello
 jflor053@hammer.cs.ucr.edu$ exit
-[jflor053@hammer rshell]$ exithellll.cpp -o rshell
+[jflor053@hammer rshell]$ exit
 exit
 
-Script done on Fri 06 Nov 2015 09:27:20 PM PST
+Script done on Fri 06 Nov 2015 11:07:35 PM PST
