@@ -100,7 +100,6 @@ int main()
     }
     return 0;
 }
-
 void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect)
 {
    // if(input[position] == "#")
@@ -181,12 +180,15 @@ void commandifier(string command, string argument, Connector& connect)
 
     if (argument.size() == 0) // no arguments 
     {
-        args = {char_command, NULL}; // args will contain the command
+        args[0] = char_command; // args will contain the command
+        args[1] = NULL;
     }
     else
     {
 	no_arg = false; // sets bool no_arg to false 
-	args1 = { char_command, char_argument, NULL} ; // args1 contains command, and argument
+	args1[0] = char_command; // args1 contains command and argument
+        args1[1] = char_argument;
+        args1[2] = NULL; 
     }
     pid_t c_pid, pid; // data type to reporesent process ID's
     int status;
