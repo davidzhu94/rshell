@@ -1,12 +1,5 @@
-#Variables 
-Compile = g++
-Flags = -Wall -Werror -ansi -pedantic 
-
-all : rshell
+all:
+	g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rshell
 	
 rshell: 
-	$(Compile) $(Flags)  
-
-
-clean:
-	rm -rf *~ bin
+	g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rshell 
