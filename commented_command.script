@@ -1,0 +1,19 @@
+Script started on Fri 06 Nov 2015 09:23:15 PM PST
+]0;jflor053@hammer:~/HOMEWORK1/rshell[?1034h[jflor053@hammer rshell]$ exit./rshellg++ rshell.cpp -o rshell
+]0;jflor053@hammer:~/HOMEWORK1/rshell[jflor053@hammer rshell]$ g++ rshell.cpp -o rshellexit[K./rshell
+jflor053@hammer.cs.ucr.edu$ echo hello # echo world
+hello 
+jflor053@hammer.cs.ucr.edu$ echo wor   hello && echo wo  hey && #hello
+hello 
+hey 
+jflor053@hammer.cs.ucr.edu$ #h echo world     hi
+jflor053@hammer.cs.ucr.edu$ # ls -a #echo     echo world     hello   && eh cho world
+.			  LICENSE		rshell.cpp
+..			  multi_command.script	single_command.script
+commented_command.script  README.md
+.git			  rshell
+jflor053@hammer.cs.ucr.edu$ exit
+]0;jflor053@hammer:~/HOMEWORK1/rshell[jflor053@hammer rshell]$ exit
+exit
+
+Script done on Fri 06 Nov 2015 09:24:28 PM PST
