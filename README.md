@@ -1,3 +1,3 @@
 # rshell
-Homework 1 
+Homework 1 \n
 *CS 100*
