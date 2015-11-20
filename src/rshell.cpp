@@ -7,6 +7,13 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <algorithm>
+#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <time.h>
+#include <errno.h>
+
 using namespace std;
 using namespace boost;
 
@@ -18,13 +25,14 @@ class Connector
         bool run;
         int type;
         bool runNext();
+
 };
 
 Connector::Connector()
 { 
     // the semicolon connector allows the next command to be execute always
     run = true; 
-    type = 0; // semicolon connector set to 0 
+    type = 0; // semicolon connector set to 0
 }
 
 Connector::~Connector()
@@ -48,11 +56,11 @@ bool Connector::runNext()
     }
     return true;
 }
-void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect);
-void commandifier(string command, string argument, Connector& connect);
+void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect, string& flag);
+void commandifier(string command, string argument, Connector& connect, string flag);
 int main()
 {
-    
+    string flag;
     string str;
     string command;
     string argument;
@@ -61,7 +69,7 @@ int main()
     int position = 0;
     while (true)
     {
-        cout << getlogin(); // returns string containing name of user logged in
+        printf("%s",getlogin()); // returns string containing name of user logged in
         gethostname(hostname, sizeof hostname); // returns the standard host name for the current machine
         cout << "@" << hostname << "$ ";
         getline(cin, str); 
@@ -72,31 +80,33 @@ int main()
         vector<string> instruction; // vector of strings 
         typedef tokenizer<boost::char_separator<char> > Tok;
         char_separator<char> sep; // default constructed
-        Tok tok(str, sep);
+        Tok tok(str, sep);;
         for (Tok::iterator tok_iter = tok.begin(); tok_iter != tok.end(); ++tok_iter) // parses the input into a command and argument
         {
 	    instruction.push_back(*tok_iter);
+		
 	}
-     
-        if (instruction[0] != "#") // checks for user input except for comments (#)
+	if (instruction[0] != "#") // checks for user input except for comments (#)
         {    
-            parseinator(instruction, command, argument, position, connect); // parses the input into a command and argument  
-            commandifier(command, argument, connect); // runs a command with a given argument 
+            parseinator(instruction, command, argument, position, connect, flag); // parses the input into a command and argument  
+            commandifier(command, argument, connect, flag); // runs a command with a given argument 
             command = "";
             argument = "";
-            for (; position < instruction.size();) // run until the end of the instruction
-            {`
-                parseinator(instruction, command, argument, position, connect);
+            int vector_size = instruction.size();
+            for (; position < vector_size;) // run until the end of the instruction
+            {
+                parseinator(instruction, command, argument, position, connect, flag);
                 if (connect.runNext()) // checks connector to see if the next command should be ran
-		{
-                    commandifier(command, argument, connect);
+	        {
+                    commandifier(command, argument, connect, flag);
                 }
-		else
-		{
-		    connect.run = false;
-		    command = "";
-		}
-		command = "";
+	        else
+	        {
+	           
+	            connect.run = true;
+	            command = "";
+	        }
+	        command = "";
                 argument = "";
             }
             position = 0;
@@ -104,7 +114,7 @@ int main()
     }
     return 0;
 }
-void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect)
+void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect, string& flag)
 {
     if (input[position] == "&") // check if string is equal to & connector 
     {
@@ -121,43 +131,79 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
         connect.type = 0; // set ; connector to 0 
         position ++;
     }
+ 
     if (input[position] != "#")
     {
         command = input[position];
         position++;
     }
-    for (; position < input.size(); position++)
+
+    int input_size = input.size();
+    for (; position < input_size; position++)
     {
+        if (input[position] == ")")
+        {
+            connect.precedence = false;
+            position++;
+            break;
+        }
+        if(command == "echo" && input[position] == "\"")
+        {
+            position++;
+            while(input[position] != "\"" && position <= input_size)
+            {
+
+                argument += input[position];
+                if(!isalnum(input[position].at(0)) && !isalnum(input[position+1].at(0)))
+                {
+
+                }
+                else
+		{
+                    argument += " ";
+                }
+		position++;
+            }
+            position++;
+            break;
+        }
         if (input[position] == "#")
         {
             position = input.size();
-            connect.type = 1;
-            connect.run = false;
             break;
         }
         if (input[position] == "&" || input[position] == "|" || input[position] == ";")
-	{
+	    {
             break;
-	}
+    	}
+	
         argument += input[position];
-        if (position+1 != input.size() && command == "echo")
-  	{
+        int input_size1 = input.size();
+        if (position+1 != input_size1 && command == "echo")
+	{				
+	    //adds spaces when echoing
             argument += " ";
 	}
     }
 }
-void commandifier(string command, string argument, Connector& connect)
+void commandifier(string command, string argument, Connector& connect, string flag)
 {
     const char * const_command = command.c_str(); 
-    char char_command[command.size()];
+    char * char_command = new char[command.size()];
     const char * const_argument = argument.c_str();
-    char char_argument[argument.size()];
+    char * char_argument = new char[argument.size()];
     strcpy (char_command, const_command);
     strcpy (char_argument, const_argument);    
     char * args[2]; // char pointer array that holds command, and NULL
     char * args1[3]; // char pointer array that holds command, argument, and NULL
     bool no_arg = true;
     bool failed = false;
+    
+    // exit command     
+    if(command == "exit" || argument == "exit")
+    {
+	exit(1);
+    }
 
     if (argument.size() == 0) // no arguments 
     {
@@ -183,7 +229,7 @@ void commandifier(string command, string argument, Connector& connect)
     else if (c_pid == 0) // in child process 
     {
  	if (no_arg) // no argument
-	{                                                                                             
+	{ 		                                                                                            
         	execvp( args[0], args); // execvp the char pointer array that holds the command only
         	if (execvp(args[0], args) == -1) // if it returns -1 it failed
                 {                                                                                                     
@@ -191,27 +237,44 @@ void commandifier(string command, string argument, Connector& connect)
                     connect.run = false;
                     failed = true;
                 }
+		exit(3);
 	}
 	else // with command and argument
 	{
- 		execvp(args1[0], args1); // execvp the char pointer array that holds the command, and argument
+		execvp(args1[0], args1); // execvp the char pointer array that holds the command, and argument
 		if (execvp(args1[0], args1) == -1) // if it returns -1 it failed
                 {
                     perror("execvp failed");
                     connect.run = false; 
                     failed = true;
                 }
+		exit(3);
 	}
     }
     else if (c_pid > 0) // parent process
     {
-        if ((pid = wait(&status)) < 0) 
+        if((pid = wait(&status)) < 0 )
         {
             perror("wait");
-            exit(1);
+	    exit(3);
         }
-    }
-    if (!failed)
-    {
-        connect.run = true;
-    }
+        if (WIFEXITED(status))  //Evaluates to a non-zero value if status was returned for a child process that terminated normally. 
+
+        {
+            if (WEXITSTATUS(status) != 0)
+            {
+                connect.run = false;
+            }
+	    else
+	    {
+		connect.run = true;	
+            }
+        }
+       else 
+        {
+            connect.run = true;
+        }
+     }
+}
+
+
