@@ -25,7 +25,8 @@ class Connector
         bool run;
         int type;
         bool runNext();
-
+        bool precedence;
+	
 };
 
 Connector::Connector()
@@ -33,6 +34,7 @@ Connector::Connector()
     // the semicolon connector allows the next command to be execute always
     run = true; 
     type = 0; // semicolon connector set to 0
+    precedence = false;
 }
 
 Connector::~Connector()
@@ -103,7 +105,14 @@ int main()
                 }
 	        else
 	        {
-	          
+	            while(connect.precedence && position < vector_size)
+		        {
+		            if(instruction[position] == ")")
+		            {
+		                connect.precedence = false;
+		            }
+		            position++;
+		        }
 	            connect.run = true;
 	            command = "";
 	        }
@@ -132,7 +141,11 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
         connect.type = 0; // set ; connector to 0 
         position ++;
     }
- 
+    if (input[position] == "(")
+    {
+        connect.precedence = true;
+        position++;
+    }
     if (input[position] != "#")
     {
         command = input[position];
@@ -164,7 +177,12 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
     int input_size = input.size();
     for (; position < input_size; position++)
     {
-     
+        if (input[position] == ")")
+        {
+            connect.precedence = false;
+            position++;
+            break;
+        }
         if(command == "echo" && input[position] == "\"")
         {
             position++;
