@@ -58,6 +58,7 @@ bool Connector::runNext()
 }
 void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect, string& flag);
 void commandifier(string command, string argument, Connector& connect, string flag);
+void test_function(string command, string flag, string argument, Connector& connect);
 int main()
 {
     string flag;
@@ -102,7 +103,7 @@ int main()
                 }
 	        else
 	        {
-	           
+	          
 	            connect.run = true;
 	            command = "";
 	        }
@@ -137,16 +138,33 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
         command = input[position];
         position++;
     }
-
+    if (command == "test")
+    {
+        if(input[position] == "-")
+        {
+            position++;
+	    if (input[position] == "f")
+            {
+		flag = "-e";
+		position++;
+	    }
+	    else if (input[position] == "d")
+	    {
+		flag = "-d";
+		position++;	
+	    }
+	    else // DEFAULT E
+	    {
+		flag = "-e";
+		position++;
+            }
+        }
+    }
+  
     int input_size = input.size();
     for (; position < input_size; position++)
     {
-        if (input[position] == ")")
-        {
-            connect.precedence = false;
-            position++;
-            break;
-        }
+     
         if(command == "echo" && input[position] == "\"")
         {
             position++;
@@ -199,6 +217,11 @@ void commandifier(string command, string argument, Connector& connect, string fl
     bool no_arg = true;
     bool failed = false;
     
+    if(command == "test" || command == "[")
+    {	
+	test_function(command,flag,argument,connect);
+	return;	
+    }
     // exit command     
     if(command == "exit" || argument == "exit")
     {
@@ -276,5 +299,32 @@ void commandifier(string command, string argument, Connector& connect, string fl
         }
      }
 }
+void test_function(string command, string flag, string argument, Connector &connect)
+{
+   const char * arg = argument.c_str();
+   struct stat sb;
+   if(flag == "-f")
+   {
+ 	switch (sb.st_mode & S_IFMT){
+	case S_IFREG:   connect.run = true;  
+	}
+   }
+   if(flag == "-d")
+   {
+	switch(sb.st_mode & S_IFMT){
+	case S_IFDIR: connect.run = true; 
+	}	
+	
+   }
+   if(stat(arg,&sb)==0)
+   {
+        connect.run = true;
+   }
+   else
+   {
+   	connect.run = false;    
+   }	
+}  
+
 
 
