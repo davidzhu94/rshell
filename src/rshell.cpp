@@ -113,7 +113,7 @@ int main()
 		            }
 		            position++;
 		        }
-	            connect.run = true;
+	           
 	            command = "";
 	        }
 	        command = "";
@@ -293,11 +293,12 @@ void commandifier(string command, string argument, Connector& connect, string fl
 	}
     }
     else if (c_pid > 0) // parent process
-    {
+    {	
         if((pid = wait(&status)) < 0 )
         {
             perror("wait");
 	    exit(3);
+
         }
         if (WIFEXITED(status))  //Evaluates to a non-zero value if status was returned for a child process that terminated normally. 
 
