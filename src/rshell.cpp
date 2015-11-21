@@ -158,7 +158,7 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
             position++;
 	    if (input[position] == "f")
             {
-		flag = "-e";
+		flag = "-f";
 		position++;
 	    }
 	    else if (input[position] == "d")
@@ -317,32 +317,60 @@ void commandifier(string command, string argument, Connector& connect, string fl
         }
      }
 }
-void test_function(string command, string flag, string argument, Connector &connect)
+void test_function(string command, string& flag, string argument, Connector &connect)
 {
    const char * arg = argument.c_str(); 
-   struct stat sb; // struct for the stat function 
+   struct stat sb; // struct for the stat function  
+   cout<<flag<<endl;
    if(flag == "-f")
    {
- 	switch (sb.st_mode & S_IFMT){
-	case S_IFREG:   connect.run = true;  // checks if the input is a regular file
-	}
+        if(stat(arg,&sb) == 0)
+        {
+            connect.run = true;
+	    if(S_ISREG(sb.st_mode))
+	    {
+ 		connect.run = true;
+	    }
+	    else
+	    {
+		connect.run = false;
+	    }
+        }
+        else
+        {
+            connect.run = false;
+        }
    }
-   if(flag == "-d")
+   else if(flag == "-d")
    {
-	switch(sb.st_mode & S_IFMT){ 
-	case S_IFDIR: connect.run = true; // check if the input is a directory  
-	}	
+        if(stat(arg,&sb) == 0)
+        {
+            connect.run = true;	    
+            if(S_ISDIR(sb.st_mode))
+            {
+            	connect.run = true;
+            }
+            else
+       	    {
+             	connect.run = false;
+            }
+        }
+        else
+        {
+            connect.run = false;
+        }	
+
 	
-   }
-   if(stat(arg,&sb)==0) // checks if file/directory exists
-   {
-        connect.run = true;
-   }
+   }	
    else
    {
-   	connect.run = false;    
-   }	
-}  
-
-
-
+	if(stat(arg,&sb) == 0)
+	{ 
+	    connect.run = true;
+ 	}
+	else
+	{
+	    connect.run = false;	
+	}
+   }
+} 
