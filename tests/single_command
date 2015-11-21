@@ -1,0 +1,56 @@
+Script started on Fri 20 Nov 2015 05:56:33 PM PST
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o-rshell
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ ls
+exit1.script  homework2	     homework2_error_ls_j.cpp  homework2.final.cpp    multi_command.script  rshell.cpp
+exit.script   homework2.cpp  homework2.final	       multi_command1.script  rshell		    single_command1.script
+jflor053@hammer.cs.ucr.edu$ ls -a
+.   exit1.script  homework2	 homework2_error_ls_j.cpp  homework2.final.cpp	  multi_command.script	rshell.cpp
+..  exit.script	  homework2.cpp	 homework2.final	   multi_command1.script  rshell		single_command1.script
+jflor053@hammer.cs.ucr.edu$ ls -j
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ ls -al
+total 212
+drwxr-xr-x  2 jflor053 csmajs  4096 Nov 20 17:56 .
+drwx------ 12 jflor053 csmajs  4096 Nov 20 17:55 ..
+-rw-r--r--  1 jflor053 csmajs  1327 Nov 20 17:49 exit1.script
+-rw-r--r--  1 jflor053 csmajs	925 Nov 20 17:50 exit.script
+-rwxr-xr-x  1 jflor053 csmajs 45533 Nov 20 17:25 homework2
+-rw-r--r--  1 jflor053 csmajs  9437 Nov 20 14:19 homework2.cpp
+-rw-r--r--  1 jflor053 csmajs 10209 Nov 20 13:45 homework2_error_ls_j.cpp
+-rwxr-xr-x  1 jflor053 csmajs 45061 Nov 20 14:57 homework2.final
+-rw-r--r--  1 jflor053 csmajs  9375 Nov 20 14:47 homework2.final.cpp
+-rw-r--r--  1 jflor053 csmajs  2715 Nov 20 17:35 multi_command1.script
+-rw-r--r--  1 jflor053 csmajs  1458 Nov 20 17:36 multi_command.script
+-rwxr-xr-x  1 jflor053 csmajs 45052 Nov 20 17:56 rshell
+-rw-r--r--  1 jflor053 csmajs  9376 Nov 20 17:24 rshell.cpp
+-rw-r--r--  1 jflor053 csmajs	  0 Nov 20 17:56 single_command1.script
+jflor053@hammer.cs.ucr.edu$ echo A
+A
+jflor053@hammer.cs.ucr.edu$ echo AB CD
+AB CD
+jflor053@hammer.cs.ucr.edu$ echo "A"
+A
+jflor053@hammer.cs.ucr.edu$ echo "A B"
+A B
+jflor053@hammer.cs.ucr.edu$ echo "A && B"
+A && B
+jflor053@hammer.cs.ucr.edu$ echo A && B
+A
+execvp failed: No such file or directory
+jflor053@hammer.cs.ucr.edu$ echo "A && B"
+A && B
+jflor053@hammer.cs.ucr.edu$ echo "A || B""
+A || B
+jflor053@hammer.cs.ucr.edu$ echo "A ; B"
+A ; B
+jflor053@hammer.cs.ucr.edu$ echo AA
+A
+jflor053@hammer.cs.ucr.edu$ echo "A"
+A
+jflor053@hammer.cs.ucr.edu$ exit
+[jflor053@hammer HOMEWORK2]$ exit
+exit
+
+Script done on Fri 20 Nov 2015 05:59:07 PM PST
