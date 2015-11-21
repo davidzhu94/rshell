@@ -1,0 +1,25 @@
+[jflor053@hammer HOMEWORK2]$ script exit1.script
+Script started, file is exit1.script
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ exit
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo A && exit
+A
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo A || exit
+A
+jflor053@hammer.cs.ucr.edu$ echo A; exit
+A
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo A # exit
+A
+jflor053@hammer.cs.ucr.edu$ echo A && echo B && exit
+A
+B
+[jflor053@hammer HOMEWORK2]$ exit
+exit
+Script done on Fri 20 Nov 2015 08:07:25 PM PST
