@@ -1,4 +1,5 @@
-##### Jorge Flores & David Zhu 
+##### Jorge Flores 
+##### David Zhu 
 # rshell
 ###Homework 2
 ####*CS 100*
