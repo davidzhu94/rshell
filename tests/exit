@@ -1,0 +1,21 @@
+Script started on Fri 20 Nov 2015 05:46:45 PM PST
+elllor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo A # echo B
+A
+jflor053@hammer.cs.ucr.edu$ echo A # && echo B
+A
+jflor053@hammer.cs.ucr.edu$ echo A && echo B # && echo C
+A
+B
+jflor053@hammer.cs.ucr.edu$ echo A #; echo B
+A
+jflor053@hammer.cs.ucr.edu$ echo "A # echo B"
+A # echo B
+jflor053@hammer.cs.ucr.edu$ echo A # "frfef"
+A
+jflor053@hammer.cs.ucr.edu$ exit
+[jflor053@hammer HOMEWORK2]$ exit
+exit
+
+Script done on Fri 20 Nov 2015 05:49:57 PM PST
