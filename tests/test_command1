@@ -1,0 +1,40 @@
+Script started on Sat 21 Nov 2015 03:07:45 AM PST
+[jflor053@hammer ~]$ g++ -Wall -Werror -ansi -pedantic hw2.cpp -o hw2
+[jflor053@hammer ~]$ ./hw2
+jflor053@hammer.cs.ucr.edu$ ls; test src && echo A
+a.out	   homework1  HOMEWORK2	 hw2.cpp       lab2	 Lab2.cpp  lab7-1.cpp  mergeTest  stat	    test_command1.script
+firstrepo  HOMEWORK1  hw2	 jflor053.txt  lab2.cpp	 lab7-1	   lab7.tgz    src	  stat.cpp
+A
+jflor053@hammer.cs.ucr.edu$ test -d src && echo A
+A
+jflor053@hammer.cs.ucr.edu$ test -f src && echo A
+jflor053@hammer.cs.ucr.edu$ test -e src && echo A
+A
+jflor053@hammer.cs.ucr.edu$ [src] && echo A
+A
+jflor053@hammer.cs.ucr.edu$ [ -e src ] && echo A
+A
+jflor053@hammer.cs.ucr.edu$ [ -d src ] && echo A
+A
+jflor053@hammer.cs.ucr.edu$ [ -f src ] && echo A
+jflor053@hammer.cs.ucr.edu$ test -f grgerg && echo A
+stat: No such file or directory
+jflor053@hammer.cs.ucr.edu$ test -f ggregf || echo A
+stat: No such file or directory
+A
+jflor053@hammer.cs.ucr.edu$ [ -f src ] && echo A || echo B
+B
+jflor053@hammer.cs.ucr.edu$ [ -d src] || echo A && echo C
+C
+jflor053@hammer.cs.ucr.edu$ echo A && ech D || [ -d src ] && echo E
+A
+execvp failed: No such file or directory
+E
+jflor053@hammer.cs.ucr.edu$ echo A && echo C && [ src ]
+A
+C
+jflor053@hammer.cs.ucr.edu$ exit
+[jflor053@hammer ~]$ exit
+exit
+
+Script done on Sat 21 Nov 2015 03:12:36 AM PST
