@@ -99,7 +99,7 @@ int main()
             for (; position < vector_size;) // run until the end of the instruction
             {
                 parseinator(instruction, command, argument, position, connect, flag);
-                if (connect.runNext()) // checks connector to see if the next command should be ran
+                if (connect.runNext() && command != "") // checks connector to see if the next command should be ran
 	        {
                     commandifier(command, argument, connect, flag);
                 }
