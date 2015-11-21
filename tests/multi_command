@@ -1,0 +1,52 @@
+Script started on Fri 20 Nov 2015 05:31:39 PM PST
+[jflor053@hammer HOMEWORK2]$ g++o-Wallo-Werror -ansim-pedantic rshell.cpp -o rshell
+[jflor053@hammer HOMEWORK2]$ ./rshell
+jflor053@hammer.cs.ucr.edu$ echo A && echo B
+A
+B
+jflor053@hammer.cs.ucr.edu$ echo A || echo B
+A
+jflor053@hammer.cs.ucr.edu$ echo A; echo B
+A
+B
+jflor053@hammer.cs.ucr.edu$ ls -j && echo A
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ ls -j || echo A
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+A
+jflor053@hammer.cs.ucr.edu$ echo A && echo B && echo C
+A
+B
+C
+jflor053@hammer.cs.ucr.edu$ echo A || echo B || echo C
+A
+jflor053@hammer.cs.ucr.edu$ echo A; echo B; echo C
+A
+B
+C
+jflor053@hammer.cs.ucr.edu$ ls--j && echo B || echo C
+ls: invalid option - 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ echo A || echo B || echo C
+A
+jflor053@hammer.cs.ucr.edu$ echo A && echo B || echo C
+A
+B
+jflor053@hammer.cs.ucr.edu$ ls-j && echo B || echo C
+ls: invalid option - 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ ls -j && ls -j
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ ls -j || ls -j
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+ls: invalid option -- 'j'
+Try `ls --help' for more information.
+jflor053@hammer.cs.ucr.edu$ exit
+[jflor053@hammer HOMEWORK2]$ exit
+exit
+
+Script done on Fri 20 Nov 2015 05:35:34 PM PST
