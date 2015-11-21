@@ -1,5 +1,5 @@
 Script started on Fri 20 Nov 2015 05:46:45 PM PST
-elllor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
+[jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rshell
 [jflor053@hammer HOMEWORK2]$ ./rshell
 jflor053@hammer.cs.ucr.edu$ echo A # echo B
 A
