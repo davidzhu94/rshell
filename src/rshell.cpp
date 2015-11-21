@@ -321,7 +321,6 @@ void test_function(string command, string & flag, string argument, Connector& co
 {
    const char * arg = argument.c_str(); 
    struct stat sb; // struct for the stat function  
-   cout<<flag<<endl;
    if(flag == "-f")
    {
         if(stat(arg,&sb) == 0)
