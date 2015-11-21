@@ -1,4 +1,3 @@
-[jflor053@hammer HOMEWORK2]$ script exit1.script
 Script started, file is exit1.script
 [jflor053@hammer HOMEWORK2]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rsh
 [jflor053@hammer HOMEWORK2]$ ./rshell
