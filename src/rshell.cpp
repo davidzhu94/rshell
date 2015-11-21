@@ -319,22 +319,22 @@ void commandifier(string command, string argument, Connector& connect, string fl
 }
 void test_function(string command, string flag, string argument, Connector &connect)
 {
-   const char * arg = argument.c_str();
-   struct stat sb;
+   const char * arg = argument.c_str(); 
+   struct stat sb; // struct for the stat function 
    if(flag == "-f")
    {
  	switch (sb.st_mode & S_IFMT){
-	case S_IFREG:   connect.run = true;  
+	case S_IFREG:   connect.run = true;  // checks if the input is a regular file
 	}
    }
    if(flag == "-d")
    {
-	switch(sb.st_mode & S_IFMT){
-	case S_IFDIR: connect.run = true; 
+	switch(sb.st_mode & S_IFMT){ 
+	case S_IFDIR: connect.run = true; // check if the input is a directory  
 	}	
 	
    }
-   if(stat(arg,&sb)==0)
+   if(stat(arg,&sb)==0) // checks if file/directory exists
    {
         connect.run = true;
    }
