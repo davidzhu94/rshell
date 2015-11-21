@@ -1,1 +1,22 @@
-.
+Script started on Fri 20 Nov 2015 10:46:45 PM PST
+[dzhu006@hammer Assignment1]$ g++ -Wall -Werror -ansi -pedantic rshell.cpp -o rshell
+[dzhu006@hammer Assignment1]$ ./rshell
+dzhu006@hammer.cs.ucr.edu$ (echo A && echo B) || (echo C && echo D)
+A
+B
+dzhu006@hammer.cs.ucr.edu$ (echo A && ech B) || (echo C && echo D)
+A
+C
+D
+dzhu006@hammer.cs.ucr.edu$ (echo B && echo A && echo C) && (echo D)
+B
+A
+C
+D
+dzhu006@hammer.cs.ucr.edu$ (ech A) || (echo B && echo C)
+B
+C
+dzhu006@hammer.cs.ucr.edu$ exit
+exit
+
+Script done on Fri 20 Nov 2015 10:48:43 PM PST
