@@ -151,7 +151,7 @@ void parseinator(vector<string> input, string& command, string& argument, int& p
         command = input[position];
         position++;
     }
-    if (command == "test")
+    if (command == "test" || command == "[")
     {
         if(input[position] == "-")
         {
@@ -319,24 +319,36 @@ void commandifier(string command, string argument, Connector& connect, string fl
 }
 void test_function(string command, string & flag, string argument, Connector& connect)
 {
+   char b = '[';
+   char c = ']';
+   argument.erase(remove(argument.begin(), argument.end(), c ), argument.end());  
+   argument.erase(remove(argument.begin(), argument.end(), b ), argument.end());
    const char * arg = argument.c_str(); 
    struct stat sb; // struct for the stat function  
+   
+   
    if(flag == "-f")
    {
         if(stat(arg,&sb) == 0)
         {
+	
             connect.run = true;
 	    if(S_ISREG(sb.st_mode))
-	    {
+	    {	
+		
  		connect.run = true;
+	
 	    }
 	    else
 	    {
+	
 		connect.run = false;
+		
 	    }
         }
         else
         {
+	    perror("stat");
             connect.run = false;
         }
    }
@@ -348,14 +360,17 @@ void test_function(string command, string & flag, string argument, Connector& co
             if(S_ISDIR(sb.st_mode))
             {
             	connect.run = true;
+		
             }
             else
        	    {
              	connect.run = false;
+		
             }
         }
         else
         {
+	    perror("stat");
             connect.run = false;
         }	
 
@@ -369,7 +384,9 @@ void test_function(string command, string & flag, string argument, Connector& co
  	}
 	else
 	{
+	    perror("stat");
 	    connect.run = false;	
 	}
    }
 } 
+
