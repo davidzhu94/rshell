@@ -60,7 +60,7 @@ bool Connector::runNext()
 }
 void parseinator(vector<string> input, string& command, string& argument, int& position, Connector& connect, string& flag);
 void commandifier(string command, string argument, Connector& connect, string flag);
-void test_function(string command, string flag, string argument, Connector& connect);
+void test_function(string command, string & flag, string argument, Connector& connect);
 int main()
 {
     string flag;
@@ -317,7 +317,7 @@ void commandifier(string command, string argument, Connector& connect, string fl
         }
      }
 }
-void test_function(string command, string& flag, string argument, Connector &connect)
+void test_function(string command, string & flag, string argument, Connector& connect);
 {
    const char * arg = argument.c_str(); 
    struct stat sb; // struct for the stat function  
